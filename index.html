@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hackathon Judging Form</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🏆 Hackathon Judging Form</h1>
+            <p class="subtitle">Submit your scores and feedback</p>
+        </header>
+
+        <form id="judgingForm">
+            <div class="form-section">
+                <h2>Judge Information</h2>
+                <div class="form-group">
+                    <label for="judgeName">Your Name *</label>
+                    <input type="text" id="judgeName" name="judgeName" required>
+                </div>
+                <div class="form-group">
+                    <label for="projectName">Project/Team Name</label>
+                    <input type="text" id="projectName" name="projectName" placeholder="Optional">
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h2>Scoring Categories</h2>
+                <p class="instructions">Rate each category from 1-10 and provide feedback</p>
+                
+                <div id="categoriesContainer"></div>
+            </div>
+
+            <div class="form-section">
+                <h2>General Feedback</h2>
+                <div class="form-group">
+                    <label for="generalFeedback">Additional Comments</label>
+                    <textarea id="generalFeedback" name="generalFeedback" rows="4" placeholder="Any additional feedback or comments..."></textarea>
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit" class="btn btn-primary">Submit Scores</button>
+                <button type="reset" class="btn btn-secondary">Reset Form</button>
+            </div>
+        </form>
+
+        <div id="message" class="message"></div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
+
