@@ -1,15 +1,7 @@
 {
   "name": "ai-social-good-ranking",
   "version": "1.0.0",
-  "description": "Simple team ranking app for AI Design for Social Good Hackathon",
-  "scripts": {
-    "dev": "vercel dev",
-    "deploy": "vercel"
-  },
   "dependencies": {
     "@vercel/kv": "^1.0.1"
-  },
-  "devDependencies": {
-    "vercel": "^33.0.0"
   }
 }
