@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Rankings</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            padding: 40px;
+        }
+
+        /* Login Screen */
+        .login-container {
+            max-width: 500px;
+        }
+
+        #loginScreen h1 {
+            color: #667eea;
+            font-size: 2.2em;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+
+        #loginScreen .subtitle {
+            color: #666;
+            font-size: 1.1em;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #444;
+        }
+
+        input[type="password"] {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1em;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        .btn {
+            padding: 14px 32px;
+            font-size: 1.1em;
+            font-weight: 600;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 100%;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        /* Dashboard Screen */
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        h1 {
+            color: #667eea;
+            font-size: 2.2em;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 1.1em;
+        }
+
+        .header-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .btn-small {
+            padding: 10px 20px;
+            font-size: 0.9em;
+            font-weight: 600;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            background: #667eea;
+            color: white;
+        }
+
+        .btn-logout {
+            background: #dc3545;
+        }
+
+        .btn-small:hover {
+            opacity: 0.9;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+        }
+
+        .stat-card h3 {
+            font-size: 2.5em;
+            margin-bottom: 5px;
+        }
+
+        .stat-card p {
+            opacity: 0.9;
+        }
+
+        .section {
+            margin-bottom: 40px;
+        }
+
+        .section h2 {
+            color: #667eea;
+            font-size: 1.5em;
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        th {
+            background: #667eea;
+            color: white;
+            font-weight: 600;
+        }
+
+        tr:hover {
+            background: #f8f9fa;
+        }
+
+        .rank-1 { color: #FFD700; font-weight: bold; }
+        .rank-2 { color: #C0C0C0; font-weight: bold; }
+        .rank-3 { color: #CD7F32; font-weight: bold; }
+
+        .message {
+            display: none;
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+            font-weight: 500;
+        }
+
+        .message.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .summary-table {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 12px;
+        }
+
+        .winner {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #FFD700;
+        }
+    </style>
+</head>
+<body>
+    <!-- Login Screen -->
+    <div id="loginScreen" class="container login-container">
+        <h1>🔒 Admin Login</h1>
+        <p class="subtitle">Enter password to view rankings</p>
+        <form id="loginForm">
+            <div class="form-group">
+                <label for="adminPassword">Password</label>
+                <input type="password" id="adminPassword" required autofocus>
+            </div>
+            <button type="submit" class="btn btn-primary">Login</button>
+            <div id="loginMessage" class="message"></div>
+        </form>
+    </div>
+
+    <!-- Dashboard Screen -->
+    <div id="dashboardScreen" class="container" style="display: none;">
+        <div class="admin-header">
+            <div>
+                <h1>📊 Rankings Dashboard</h1>
+                <p class="subtitle">AI Design for Social Good Hackathon</p>
+            </div>
+            <div class="header-buttons">
+                <button class="btn-small" onclick="loadRankings()">🔄 Refresh</button>
+                <button class="btn-small btn-logout" onclick="logout()">Logout</button>
+            </div>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <h3 id="totalJudges">0</h3>
+                <p>Total Judges</p>
+            </div>
+            <div class="stat-card">
+                <h3 id="totalSubmissions">0</h3>
+                <p>Submissions</p>
+            </div>
+        </div>
+
+        <div class="section summary-table">
+            <h2>🏆 Final Results</h2>
+            <div id="summaryTable"></div>
+        </div>
+
+        <div class="section">
+            <h2>Individual Judge Rankings</h2>
+            <div id="rankingsTable"></div>
+        </div>
+    </div>
+
+    <script>
+        const ADMIN_PASSWORD = 'AI_SocialGood_2024'; // Change this!
+
+        // Check authentication
+        function checkAuth() {
+            const isAuthenticated = sessionStorage.getItem('adminAuth');
+            if (isAuthenticated === 'true') {
+                showDashboard();
+                loadRankings();
+            } else {
+                showLogin();
+            }
+        }
+
+        // Handle login
+        document.getElementById('loginForm').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const password = document.getElementById('adminPassword').value;
+            
+            if (password === ADMIN_PASSWORD) {
+                sessionStorage.setItem('adminAuth', 'true');
+                showDashboard();
+                loadRankings();
+            } else {
+                const msg = document.getElementById('loginMessage');
+                msg.textContent = 'Invalid password';
+                msg.className = 'message error';
+                msg.style.display = 'block';
+                setTimeout(() => msg.style.display = 'none', 3000);
+            }
+        });
+
+        // Logout
+        function logout() {
+            sessionStorage.removeItem('adminAuth');
+            showLogin();
+        }
+
+        // Show/hide screens
+        function showLogin() {
+            document.getElementById('loginScreen').style.display = 'block';
+            document.getElementById('dashboardScreen').style.display = 'none';
+        }
+
+        function showDashboard() {
+            document.getElementById('loginScreen').style.display = 'none';
+            document.getElementById('dashboardScreen').style.display = 'block';
+        }
+
+        // Load rankings
+        async function loadRankings() {
+            try {
+                const response = await fetch('/api/get-rankings');
+                const data = await response.json();
+                
+                if (!data.success) {
+                    throw new Error('Failed to load rankings');
+                }
+
+                displayRankings(data.rankings);
+                displaySummary(data.rankings);
+            } catch (error) {
+                console.error('Error loading rankings:', error);
+                document.getElementById('rankingsTable').innerHTML = 
+                    '<p style="color: red;">Error loading rankings. Please refresh.</p>';
+            }
+        }
+
+        // Display individual rankings
+        function displayRankings(rankings) {
+            const container = document.getElementById('rankingsTable');
+            
+            if (rankings.length === 0) {
+                container.innerHTML = '<p>No rankings submitted yet.</p>';
+                return;
+            }
+
+            document.getElementById('totalJudges').textContent = rankings.length;
+            document.getElementById('totalSubmissions').textContent = rankings.length;
+
+            let html = '<table><thead><tr>';
+            html += '<th>Judge</th>';
+            html += '<th>Snapily</th>';
+            html += '<th>Genie Health</th>';
+            html += '<th>Harbor</th>';
+            html += '<th>Comments</th>';
+            html += '<th>Submitted</th>';
+            html += '</tr></thead><tbody>';
+
+            rankings.forEach(r => {
+                html += '<tr>';
+                html += `<td><strong>${r.judgeName}</strong></td>`;
+                html += `<td class="rank-${r.rankings.snapily}">${getOrdinal(r.rankings.snapily)}</td>`;
+                html += `<td class="rank-${r.rankings.genie}">${getOrdinal(r.rankings.genie)}</td>`;
+                html += `<td class="rank-${r.rankings.harbor}">${getOrdinal(r.rankings.harbor)}</td>`;
+                html += `<td>${r.comments || '-'}</td>`;
+                html += `<td>${new Date(r.timestamp).toLocaleString()}</td>`;
+                html += '</tr>';
+            });
+
+            html += '</tbody></table>';
+            container.innerHTML = html;
+        }
+
+        // Display summary
+        function displaySummary(rankings) {
+            const container = document.getElementById('summaryTable');
+            
+            if (rankings.length === 0) {
+                container.innerHTML = '<p>No rankings submitted yet.</p>';
+                return;
+            }
+
+            // Calculate points (1st = 3pts, 2nd = 2pts, 3rd = 1pt)
+            const scores = {
+                snapily: 0,
+                genie: 0,
+                harbor: 0
+            };
+
+            rankings.forEach(r => {
+                scores.snapily += (4 - r.rankings.snapily);
+                scores.genie += (4 - r.rankings.genie);
+                scores.harbor += (4 - r.rankings.harbor);
+            });
+
+            // Sort teams by score
+            const sorted = [
+                { name: 'Snapily', score: scores.snapily },
+                { name: 'Genie Health', score: scores.genie },
+                { name: 'Harbor', score: scores.harbor }
+            ].sort((a, b) => b.score - a.score);
+
+            let html = '<table><thead><tr>';
+            html += '<th>Place</th>';
+            html += '<th>Team</th>';
+            html += '<th>Total Points</th>';
+            html += '<th>Details</th>';
+            html += '</tr></thead><tbody>';
+
+            sorted.forEach((team, index) => {
+                const place = index + 1;
+                const teamKey = team.name === 'Snapily' ? 'snapily' : 
+                              team.name === 'Genie Health' ? 'genie' : 'harbor';
+                
+                // Count 1st, 2nd, 3rd places
+                const firsts = rankings.filter(r => r.rankings[teamKey] === 1).length;
+                const seconds = rankings.filter(r => r.rankings[teamKey] === 2).length;
+                const thirds = rankings.filter(r => r.rankings[teamKey] === 3).length;
+
+                const placeClass = place === 1 ? 'winner' : '';
+
+                html += '<tr>';
+                html += `<td class="rank-${place}">${getOrdinal(place)}</td>`;
+                html += `<td class="${placeClass}">${team.name}</td>`;
+                html += `<td><strong>${team.score} pts</strong></td>`;
+                html += `<td>${firsts}× 1st, ${seconds}× 2nd, ${thirds}× 3rd</td>`;
+                html += '</tr>';
+            });
+
+            html += '</tbody></table>';
+            container.innerHTML = html;
+        }
+
+        // Helper function
+        function getOrdinal(num) {
+            if (num === 1) return '1st Place';
+            if (num === 2) return '2nd Place';
+            if (num === 3) return '3rd Place';
+            return num;
+        }
+
+        // Auto-refresh every 30 seconds
+        setInterval(() => {
+            if (document.getElementById('dashboardScreen').style.display !== 'none') {
+                loadRankings();
+            }
+        }, 30000);
+
+        // Check auth on page load
+        document.addEventListener('DOMContentLoaded', checkAuth);
+    </script>
+</body>
+</html>
