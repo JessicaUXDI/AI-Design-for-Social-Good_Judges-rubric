@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Judge Ranking - AI Design for Social Good</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            padding: 40px;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+
+        h1 {
+            color: #667eea;
+            font-size: 2.2em;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 1.1em;
+        }
+
+        .form-section {
+            margin-bottom: 30px;
+        }
+
+        .form-section h2 {
+            color: #667eea;
+            font-size: 1.5em;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #444;
+        }
+
+        input[type="text"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1em;
+            font-family: inherit;
+            transition: border-color 0.3s;
+        }
+
+        input:focus,
+        textarea:focus,
+        select:focus {
+            outline: none;
+            border-color: #667eea;
+        }
+
+        select {
+            cursor: pointer;
+            background: white;
+        }
+
+        .team-ranking {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 15px;
+            border: 2px solid #e0e0e0;
+        }
+
+        .team-ranking h3 {
+            color: #667eea;
+            font-size: 1.2em;
+            margin-bottom: 15px;
+        }
+
+        .instructions {
+            background: #fff3cd;
+            border: 2px solid #ffc107;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            color: #856404;
+        }
+
+        .instructions strong {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .btn {
+            padding: 14px 32px;
+            font-size: 1.1em;
+            font-weight: 600;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            width: 100%;
+        }
+
+        .btn-primary:hover:not(:disabled) {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-primary:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .message {
+            display: none;
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-top: 20px;
+            font-weight: 500;
+        }
+
+        .message.success {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .message.error {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🏆 Judge Ranking Form</h1>
+            <p class="subtitle">AI Design for Social Good Hackathon 2024</p>
+        </header>
+
+        <div class="instructions">
+            <strong>Instructions:</strong>
+            Rank the three teams from 1st to 3rd place. Each team must receive a different rank.
+        </div>
+
+        <form id="rankingForm">
+            <div class="form-section">
+                <h2>Judge Information</h2>
+                <div class="form-group">
+                    <label for="judgeName">Your Name *</label>
+                    <input type="text" id="judgeName" name="judgeName" required>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h2>Team Rankings</h2>
+                
+                <div class="team-ranking">
+                    <h3>Snapily</h3>
+                    <div class="form-group">
+                        <label for="snapily">Rank *</label>
+                        <select id="snapily" name="snapily" required>
+                            <option value="">Select rank...</option>
+                            <option value="1">1st Place</option>
+                            <option value="2">2nd Place</option>
+                            <option value="3">3rd Place</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="team-ranking">
+                    <h3>Genie Health</h3>
+                    <div class="form-group">
+                        <label for="genie">Rank *</label>
+                        <select id="genie" name="genie" required>
+                            <option value="">Select rank...</option>
+                            <option value="1">1st Place</option>
+                            <option value="2">2nd Place</option>
+                            <option value="3">3rd Place</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="team-ranking">
+                    <h3>Harbor</h3>
+                    <div class="form-group">
+                        <label for="harbor">Rank *</label>
+                        <select id="harbor" name="harbor" required>
+                            <option value="">Select rank...</option>
+                            <option value="1">1st Place</option>
+                            <option value="2">2nd Place</option>
+                            <option value="3">3rd Place</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h2>Additional Comments (Optional)</h2>
+                <div class="form-group">
+                    <label for="comments">General Feedback</label>
+                    <textarea id="comments" name="comments" rows="4" placeholder="Any additional feedback or comments..."></textarea>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Submit Rankings</button>
+        </form>
+
+        <div id="message" class="message"></div>
+    </div>
+
+    <script>
+        const form = document.getElementById('rankingForm');
+        const message = document.getElementById('message');
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            // Get values
+            const judgeName = document.getElementById('judgeName').value;
+            const snapilyRank = document.getElementById('snapily').value;
+            const genieRank = document.getElementById('genie').value;
+            const harborRank = document.getElementById('harbor').value;
+            const comments = document.getElementById('comments').value;
+
+            // Validate that all ranks are different
+            const ranks = [snapilyRank, genieRank, harborRank];
+            const uniqueRanks = new Set(ranks);
+            
+            if (uniqueRanks.size !== 3) {
+                showMessage('Please assign a different rank to each team (1st, 2nd, and 3rd)', 'error');
+                return;
+            }
+
+            // Disable submit button
+            const submitBtn = form.querySelector('button[type="submit"]');
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Submitting...';
+
+            try {
+                const response = await fetch('/api/submit-ranking', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        judgeName,
+                        rankings: {
+                            snapily: parseInt(snapilyRank),
+                            genie: parseInt(genieRank),
+                            harbor: parseInt(harborRank)
+                        },
+                        comments
+                    })
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    showMessage('Rankings submitted successfully! Thank you for judging.', 'success');
+                    form.reset();
+                } else {
+                    showMessage(data.error || 'Failed to submit rankings. Please try again.', 'error');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                showMessage('Network error. Please check your connection and try again.', 'error');
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Submit Rankings';
+            }
+        });
+
+        function showMessage(text, type) {
+            message.textContent = text;
+            message.className = `message ${type}`;
+            message.style.display = 'block';
+            
+            setTimeout(() => {
+                message.style.display = 'none';
+            }, 5000);
+        }
+
+        // Prevent duplicate ranks
+        const selects = document.querySelectorAll('select');
+        selects.forEach(select => {
+            select.addEventListener('change', () => {
+                const selectedRanks = Array.from(selects)
+                    .map(s => s.value)
+                    .filter(v => v !== '');
+                
+                if (selectedRanks.length !== new Set(selectedRanks).size) {
+                    showMessage('Warning: You have assigned the same rank to multiple teams', 'error');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
