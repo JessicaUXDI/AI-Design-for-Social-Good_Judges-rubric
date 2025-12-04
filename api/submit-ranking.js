@@ -14,15 +14,14 @@ export default async function handler(req, res) {
   }
 
   try {
-    const { judgeName, rankings, comments } = req.body;
+    const { rankings, comments } = req.body;
 
-    if (!judgeName || !rankings) {
+    if (!rankings) {
       return res.status(400).json({ error: 'Missing required fields' });
     }
 
     const submission = {
       id: Date.now().toString(),
-      judgeName,
       rankings,
       comments: comments || '',
       timestamp: new Date().toISOString()
