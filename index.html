@@ -243,7 +243,6 @@
             e.preventDefault();
 
             // Get values
-            const judgeName = document.getElementById('judgeName').value;
             const snapilyRank = document.getElementById('snapily').value;
             const genieRank = document.getElementById('genie').value;
             const harborRank = document.getElementById('harbor').value;
@@ -270,7 +269,6 @@
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
-                        judgeName,
                         rankings: {
                             snapily: parseInt(snapilyRank),
                             genie: parseInt(genieRank),
@@ -283,7 +281,7 @@
                 const data = await response.json();
 
                 if (response.ok) {
-                    showMessage('Rankings submitted successfully! Thank you for judging.', 'success');
+                    showMessage('Rankings submitted successfully! Thank you for voting.', 'success');
                     form.reset();
                 } else {
                     showMessage(data.error || 'Failed to submit rankings. Please try again.', 'error');
