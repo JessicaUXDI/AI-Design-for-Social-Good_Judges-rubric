@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Judge Ranking - AI Design for Social Good</title>
+    <title>AI Design for Social Good - Voting</title>
     <style>
         * {
             margin: 0;
@@ -13,7 +13,7 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: #FEFCFD;
             min-height: 100vh;
             padding: 20px;
         }
@@ -21,9 +21,9 @@
         .container {
             max-width: 700px;
             margin: 0 auto;
-            background: white;
+            background: #FFFFFF;
             border-radius: 16px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
             padding: 40px;
         }
 
@@ -35,13 +35,15 @@
         }
 
         h1 {
-            color: #667eea;
-            font-size: 2.2em;
+            color: #3D7773;
+            font-size: 1.8em;
+            font-weight: 700;
             margin-bottom: 10px;
+            letter-spacing: 0.5px;
         }
 
         .subtitle {
-            color: #666;
+            color: #3D4D5C;
             font-size: 1.1em;
         }
 
@@ -50,8 +52,9 @@
         }
 
         .form-section h2 {
-            color: #667eea;
-            font-size: 1.5em;
+            color: #3D7773;
+            font-size: 1.4em;
+            font-weight: 600;
             margin-bottom: 20px;
         }
 
@@ -63,7 +66,7 @@
             display: block;
             margin-bottom: 8px;
             font-weight: 600;
-            color: #444;
+            color: #3D4D5C;
         }
 
         input[type="text"],
@@ -72,50 +75,65 @@
             width: 100%;
             padding: 12px;
             border: 2px solid #e0e0e0;
-            border-radius: 8px;
+            border-radius: 10px;
             font-size: 1em;
             font-family: inherit;
             transition: border-color 0.3s;
+            background: #FFFFFF;
+            color: #3D4D5C;
+        }
+
+        input::placeholder,
+        textarea::placeholder {
+            color: #999;
         }
 
         input:focus,
         textarea:focus,
         select:focus {
             outline: none;
-            border-color: #667eea;
+            border-color: #3D7773;
         }
 
         select {
             cursor: pointer;
-            background: white;
         }
 
         .team-ranking {
-            background: #f8f9fa;
+            background: #EFF7F6;
             padding: 20px;
             border-radius: 12px;
-            margin-bottom: 15px;
-            border: 2px solid #e0e0e0;
+            margin-bottom: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            transition: all 0.2s;
+        }
+
+        .team-ranking:hover {
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
         }
 
         .team-ranking h3 {
-            color: #667eea;
+            color: #3D7773;
             font-size: 1.2em;
+            font-weight: 600;
             margin-bottom: 15px;
         }
 
         .instructions {
-            background: #fff3cd;
-            border: 2px solid #ffc107;
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            color: #856404;
+            background: #FFFBF0;
+            border: 2px solid #E8C96F;
+            padding: 18px;
+            border-radius: 12px;
+            margin-bottom: 24px;
+            color: #5C5447;
+            line-height: 1.6;
         }
 
         .instructions strong {
             display: block;
-            margin-bottom: 5px;
+            margin-bottom: 8px;
+            font-weight: 700;
+            color: #3D3020;
         }
 
         .btn {
@@ -123,20 +141,21 @@
             font-size: 1.1em;
             font-weight: 600;
             border: none;
-            border-radius: 8px;
+            border-radius: 10px;
             cursor: pointer;
             transition: all 0.3s;
         }
 
         .btn-primary {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: #3D7773;
             color: white;
             width: 100%;
         }
 
         .btn-primary:hover:not(:disabled) {
+            background: #2f5f5c;
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+            box-shadow: 0 5px 15px rgba(61, 119, 115, 0.3);
         }
 
         .btn-primary:disabled {
@@ -147,7 +166,7 @@
         .message {
             display: none;
             padding: 15px 20px;
-            border-radius: 8px;
+            border-radius: 10px;
             margin-top: 20px;
             font-weight: 500;
         }
@@ -155,38 +174,38 @@
         .message.success {
             background: #d4edda;
             color: #155724;
-            border: 1px solid #c3e6cb;
+            border: 2px solid #c3e6cb;
         }
 
         .message.error {
             background: #f8d7da;
             color: #721c24;
-            border: 1px solid #f5c6cb;
+            border: 2px solid #f5c6cb;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>BRIDGEGOOD Amplify</h1>
+            <h1>BRIDGEGOOD AMPLIFY</h1>
             <p class="subtitle">🏆 AI Design for Social Good Hackathon Voting</p>
         </header>
 
         <div class="instructions">
             <strong>Instructions:</strong>
-            Rank each team 1st, 2nd or 3rd place. Each team must receive a different rank.
+            Rank each team from 1st to 3rd place. Each team must receive a different rank.
         </div>
 
         <form id="rankingForm">
             <div class="form-section">
                 <h2>Team Rankings</h2>
-
+                
                 <div class="team-ranking">
                     <h3>Genie Health</h3>
                     <div class="form-group">
-                        <label for="snapily">Placement *</label>
-                        <select id="snapily" name="snapily" required>
-                            <option value="">Select...</option>
+                        <label for="genie">Rank *</label>
+                        <select id="genie" name="genie" required>
+                            <option value="">Select rank...</option>
                             <option value="1">1st Place</option>
                             <option value="2">2nd Place</option>
                             <option value="3">3rd Place</option>
@@ -197,9 +216,9 @@
                 <div class="team-ranking">
                     <h3>Harbor</h3>
                     <div class="form-group">
-                        <label for="genie">Placement *</label>
-                        <select id="genie" name="genie" required>
-                            <option value="">Select...</option>
+                        <label for="harbor">Rank *</label>
+                        <select id="harbor" name="harbor" required>
+                            <option value="">Select rank...</option>
                             <option value="1">1st Place</option>
                             <option value="2">2nd Place</option>
                             <option value="3">3rd Place</option>
@@ -210,9 +229,9 @@
                 <div class="team-ranking">
                     <h3>Snapily</h3>
                     <div class="form-group">
-                        <label for="harbor">Placement *</label>
-                        <select id="harbor" name="harbor" required>
-                            <option value="">Select...</option>
+                        <label for="snapily">Rank *</label>
+                        <select id="snapily" name="snapily" required>
+                            <option value="">Select rank...</option>
                             <option value="1">1st Place</option>
                             <option value="2">2nd Place</option>
                             <option value="3">3rd Place</option>
@@ -243,13 +262,13 @@
             e.preventDefault();
 
             // Get values
-            const snapilyRank = document.getElementById('snapily').value;
             const genieRank = document.getElementById('genie').value;
             const harborRank = document.getElementById('harbor').value;
+            const snapilyRank = document.getElementById('snapily').value;
             const comments = document.getElementById('comments').value;
 
             // Validate that all ranks are different
-            const ranks = [snapilyRank, genieRank, harborRank];
+            const ranks = [genieRank, harborRank, snapilyRank];
             const uniqueRanks = new Set(ranks);
             
             if (uniqueRanks.size !== 3) {
@@ -269,6 +288,7 @@
                         'Content-Type': 'application/json'
                     },
                     body: JSON.stringify({
+                        judgeName: 'Anonymous',
                         rankings: {
                             snapily: parseInt(snapilyRank),
                             genie: parseInt(genieRank),
